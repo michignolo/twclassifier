@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title><b>Classify Twitter user</b></title>
+       <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+       <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ 
+
+    <style>
+        
+        #textid : { height: 60px; }
+     
+    </style>
+ 
+    </head>
+    <body>
+ 
+ 
+<div class="container">
+
+ 
+  <h2 style="color: '#ff483f';">Classify Twitter users</h2>
+  
+  <div style='height: 20px;'> </div>
+  
+  <h4>Number of classified users (goal 1000) <span style="color: red">{{ classified_num }}</span></h4>
+  
+  <div style="height: 20px"><h4>Username: <b>{{name}}</b></h4></div>
+  
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+
+    <div name="organization" id="textid" style="height: 30px; margin-top: 30px; margin-bottom: 10px; background: #fbfbfb; padding: 10px; font-size: 16px;">Media/Press score (min 0, max 10): 
+    
+    {% if score > 5 %}
+        <span style="color: red;"> {{ score }} </span> </div>
+    {% else %}
+        <span style="color: blue;"> {{ score }} </span> </div>
+    {% endif %}
+
+
+
+    <div name="wiki_to_read" id="textid" style="height: 100px; margin-top: 30px; margin-bottom: 30px; background: #fbfbfb; padding: 10px;"> 
+        
+        <b>Popularity statistics:</b> 
+        
+        <p>
+        <table border=0>
+            <tr>
+                    <tr><td  width=200px>Number of Followers</td><td width=100px, align = 'right'> <b>{{ followers_count }} </b> </td> </tr>
+                    <tr><td> Number of Friends </td><td align = 'right'><b>{{ following_count }} </b> </td> </tr>
+                    <tr><td> Number of Tweets </td><td align = 'right'> <b>{{ tweet_count }}</b>  </td> </tr>
+                    <tr><td> Tweets on AZ </td><td  align = 'right'> <b>{{ AZ_counts }}</b>  </td> </tr>
+        </tr>
+        </table>
+    </p>
+        
+        
+        </div>
+
+
+    <div name="text_to_read" id="textid" style="height: 100px; margin-top: 30px; margin-bottom: 30px; background: #fafafa; padding: 10px;"><b>Twitter User Profile Description (orig):  </b> {{ testo }}</div>
+    <div name="text_to_read" id="textid3" style="height: 100px; margin-top: 30px; margin-bottom: 30px; background: #fafafa; padding: 10px;"><b>Twitter User Profile Description (translated): </b> {{ translated }}</div>
+    <div>
+
+    
+   <input type="radio" id="org" name="org" value="press" {% if checkd  == "press"%} checked="checked"  {% endif %}> Media/Press <span style="padding: 10px;"></span>
+   <input type="radio" id="org" name="org" value="unsure" {% if checkd == "unsure"  %} checked="checked" {% endif %}> Skip <span style="padding: 10px;"></span>
+   <input type="radio" id="org" name="org" value="user" {% if checkd  == "user"  %} checked="checked" {% endif %}> User 
+   <input type="hidden" name="org_id" value= {{ hidden_id }}>  
+    </div>
+    <div style="padding-top: 20px;"></div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+ 
+  <br>
+
+ 
+</div>
+<br>      
+</div>
+</div>
+</body>
+</html>
