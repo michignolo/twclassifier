@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <title><b>Classify Twitter user</b></title>
+        <title>Classify Twitter {{ language }} Users</title>
        <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
        <link rel="stylesheet" href="static/bootstrap-theme.min.css">
        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
@@ -11,7 +11,31 @@
         
         #textid : { height: 60px; }
      
-    </style>
+
+            ul {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              background-color: #eeeeee;
+            }
+
+            li {
+              float: left;
+            }
+
+            li a {
+              display: block;
+              color: black;
+              text-align: center;
+              padding: 16px;
+              text-decoration: none;
+            }
+
+li a:hover {
+  background-color: #111111;
+}
+</style>
  
     </head>
     <body>
@@ -20,9 +44,15 @@
 <div class="container">
 
  
-  <h2 style="color: '#ff483f';">Classify Twitter users</h2>
+  <h2 style="color: '#ff483f';">Classify  <span style="color: red">{{language}} </span>  Twitter users</h2>
   
-  <div style='height: 20px;'> </div>
+  <div style='height: 60px;'> 
+  <ul>
+  <li><a href='/?language=italian'>Italian </a></li>
+  <li><a href='/?language=english'>English </a></li>
+  </ul>
+  
+  </div>
   
   <h4>Number of classified users (goal 1000) <span style="color: red">{{ classified_num }}</span></h4>
   

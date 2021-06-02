@@ -14,7 +14,7 @@ DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
-DATABASE = 'db_itc.db'
+DATABASE = 'db_itc_upd.db'
 TABLE = "italian"
 wordlist = ['agenzia','informazione','quotidiano','stampa','blog' ]
 USERNAME = 'astrazeneca'
@@ -116,6 +116,12 @@ class ReusableForm(Form):
 @app.route("/", methods=['GET', 'POST'])
 @requires_auth
 def index():
+    
+    if( request.args.get('language')):
+        TABLE = request.args.get('language')
+    else:
+        TABLE = 'italian'
+        
     form = ReusableForm(request.form)
     translator = Translator()
 
@@ -135,7 +141,11 @@ def index():
     iddi = results[0]
     hidden_id = iddi
     description = results[1]
-    description_trans = translator.translate(description, dest='en') ## added translation
+    if(TABLE != 'english'):
+        description_trans = translator.translate(description, dest='en') ## added translation
+        description_trans_text = description_trans.text
+    else:
+        description_trans_text = " ...  "
     followers_count = results[2]
     following_count = results[3]
     location = results[4]
@@ -172,7 +182,7 @@ def index():
             flash('Error: All the form fields are required. ')
  
 
-    return render_template('index.html', testo = description, translated = description_trans.text,
+    return render_template('index.html', testo = description, translated = description_trans_text, language = TABLE.capitalize(),
                     hidden_id = iddi, score = score, checkd = checkd, 
                     ourl = 'url', followers_count  = followers_count,
                     following_count =  following_count ,
