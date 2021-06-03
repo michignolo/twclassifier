@@ -139,6 +139,8 @@ def index():
 
     count_num = resultst[0] 
     target = int(0.1 * count_num)
+    if(target > 1500):
+        target = 1500
     
 
     query = "SELECT id,description,followers_count,following_count,location,tweet_count,name,user_classification, AZ_counts FROM %s  ORDER BY RANDOM() LIMIT 1;"%(TABLE)
