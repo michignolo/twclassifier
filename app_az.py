@@ -19,7 +19,7 @@ TABLE = "italian"
 wordlist = ['agenzia','informazione','quotidiano','stampa','blog' ]
 USERNAME = 'astrazeneca'
 PASSWORD = 'astrazeneca'
-HOST = '127.0.0.1'
+HOST = '134.122.121.60'
 PORT = 8080
 
 def check_auth(username, password):
@@ -131,8 +131,16 @@ def index():
     results0 = query_db(query0, aa, True)
 
     classified_num = results0[0] 
+
+    queryt = "SELECT count(id) FROM %s "%(TABLE)
     
+    aa = (-1,)
+    resultst = query_db(queryt, aa, True)
+
+    count_num = resultst[0] 
+    target = int(0.1 * count_num)
     
+
     query = "SELECT id,description,followers_count,following_count,location,tweet_count,name,user_classification, AZ_counts FROM %s  ORDER BY RANDOM() LIMIT 1;"%(TABLE)
     
     results = query_db(query)
@@ -183,7 +191,7 @@ def index():
  
 
     return render_template('index.html', testo = description, translated = description_trans_text, language = TABLE.capitalize(),
-                    hidden_id = iddi, score = score, checkd = checkd, 
+                    hidden_id = iddi, score = score, checkd = checkd, target = target,
                     ourl = 'url', followers_count  = followers_count,
                     following_count =  following_count ,
                     tweet_count = tweet_count,
