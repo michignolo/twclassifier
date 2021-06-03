@@ -167,31 +167,34 @@ def index():
     score = getScore(description,following_count,followers_count,tweet_count)
 
     if request.method == 'POST':
-
-        org=request.form['org']
-        hid = request.form['org_id']
-
         
-        sql = "UPDATE %s SET user_classification=? WHERE id = ?"%(TABLE)
-        aa = (org,hid)
-        results = query_db(sql, aa, True,True)
+        try:
+            org=request.form['org']
+            hid = request.form['org_id']
+
+            
+            sql = "UPDATE %s SET user_classification=? WHERE id = ?"%(TABLE)
+            aa = (org,hid)
+            results = query_db(sql, aa, True,True)
 
 
-        query0 = "SELECT count(id) FROM %s WHERE user_classification <> ?"%(TABLE)
-    
-        aa = (-1,)
-        results0 = query_db(query0, aa, True)
-
-        classified_num = results0[0] 
-
+            query0 = "SELECT count(id) FROM %s WHERE user_classification <> ?"%(TABLE)
         
-        if org :
-            # Save the comment here.
-            flash('Saved ' + org)
-        else:
-            flash('Error: All the form fields are required. ')
+            aa = (-1,)
+            results0 = query_db(query0, aa, True)
+
+            classified_num = results0[0] 
+
+            
+            if org :
+                # Save the comment here.
+                flash('Saved ' + org)
+            else:
+                flash('Error: All the form fields are required. ')
  
-
+        except:
+            pass
+            
     return render_template('index.html', testo = description, translated = description_trans_text, language = TABLE.capitalize(),
                     hidden_id = iddi, score = score, checkd = checkd, target = target,
                     ourl = 'url', followers_count  = followers_count,
