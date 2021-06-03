@@ -134,8 +134,8 @@ def index():
 
     queryt = "SELECT count(id) FROM %s "%(TABLE)
     
-    aa = (-1,)
-    resultst = query_db(queryt, aa, True)
+  
+    resultst = query_db(queryt)
 
     count_num = resultst[0] 
     target = int(0.1 * count_num)
